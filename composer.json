@@ -1,0 +1,25 @@
+{
+    "name": "nexylan/cloudflare",
+    "description": "A PHP sdk to communicate with CloudFlare api V4",
+    "keywords": ["CloudFlare", "API", "SDK"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sullivan SENECHAL",
+            "email": "sullivan@nexylan.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~4.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": { "Nexy\\CloudFlare\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Nexy\\CloudFlare\\Tests\\": "tests" }
+    }
+}
