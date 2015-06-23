@@ -27,7 +27,7 @@ return Symfony\CS\Config\Config::create()
         'align_double_arrow',
         'newline_after_open_tag',
         'ordered_use',
-        'long_array_syntax',
+        'short_array_syntax',
         'strict',
         'strict_param',
     ))
