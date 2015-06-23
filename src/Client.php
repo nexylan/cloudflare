@@ -42,7 +42,13 @@ class Client
             'user_agent'    => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
             'timeout'       => 10,
         ]);
+        $resolver->setRequired([
+            'email',
+            'api_key',
+        ]);
         $resolver->setAllowedTypes('user_agent', 'string');
         $resolver->setAllowedTypes('timeout', 'int');
+        $resolver->setAllowedTypes('email', 'string');
+        $resolver->setAllowedTypes('api_key', 'string');
     }
 }
