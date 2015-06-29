@@ -16,4 +16,16 @@ namespace Nexy\CloudFlare\HttpClient;
  */
 interface HttpClientInterface
 {
+    /**
+     * Send a request to the server, receive a response,
+     * decode the response and returns an associative array.
+     *
+     * @param string   $path       Request path
+     * @param string[] $body       Request body. Array converted to JSON payload. See sample https://api.cloudflare.com/#user-update-user
+     * @param string   $httpMethod HTTP method to use
+     * @param array    $headers    Request headers
+     *
+     * @return array The associative array response content
+     */
+    public function request($path, $body = null, $httpMethod = 'GET', array $headers = array());
 }

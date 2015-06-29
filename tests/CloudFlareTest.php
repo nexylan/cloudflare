@@ -11,16 +11,16 @@
 
 namespace Nexy\CloudFlare\Tests;
 
-use Nexy\CloudFlare\Client;
+use Nexy\CloudFlare\CloudFlare;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class CloudFlareTest extends \PHPUnit_Framework_TestCase
 {
     public function testValidOptions()
     {
-        $client = new Client([
+        $client = new CloudFlare([
             'email'     => 'foo@bar.com',
             'api_key'   => 'MySecretApiKey',
         ]);
@@ -35,7 +35,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testOverrideDefaultOptions()
     {
-        $client = new Client([
+        $client = new CloudFlare([
             'email'         => 'foo@bar.com',
             'api_key'       => 'MySecretApiKey',
             'user_agent'    => 'My awesome user agent',
@@ -55,7 +55,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testMissingEmailOption()
     {
-        new Client([
+        new CloudFlare([
             'api_key'   => 'MySecretApiKey',
         ]);
     }
@@ -65,7 +65,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testMissingApiKeyOption()
     {
-        new Client([
+        new CloudFlare([
             'email'     => 'foo@bar.com',
         ]);
     }
