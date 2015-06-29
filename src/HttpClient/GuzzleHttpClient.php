@@ -45,7 +45,7 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function request($path, $body = null, $method = 'GET', array $headers = array())
+    public function request($path, $body = null, $method = 'GET', array $headers = [])
     {
         $response = $this->client->request($method, $path, [
             'body'      => $body,

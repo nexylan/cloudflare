@@ -27,5 +27,5 @@ interface HttpClientInterface
      *
      * @return array The associative array response content
      */
-    public function request($path, $body = null, $httpMethod = 'GET', array $headers = array());
+    public function request($path, $body = null, $httpMethod = 'GET', array $headers = []);
 }
