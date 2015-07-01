@@ -17,7 +17,7 @@ use Nexy\CloudFlare\CloudFlare;
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class GuzzleHttpClient implements HttpClientInterface
+class GuzzleHttpClient extends AbstractHttpClient
 {
     /**
      * @var Client
@@ -43,10 +43,11 @@ class GuzzleHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function request($path, $body = null, $method = 'GET', array $headers = [])
+    public function request($path, $method = 'GET', array $body = null, array $parameters = null, array $headers = [])
     {
         $response = $this->client->request($method, $path, [
             'body'      => $body,
+            'query'     => $parameters,
             'headers'   => $headers,
         ]);
 

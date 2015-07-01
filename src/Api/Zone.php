@@ -21,6 +21,6 @@ class Zone extends AbstractApi
      */
     public function all()
     {
-        return $this->httpClient->request('zones');
+        return $this->httpClient->get('zones');
     }
 }
