@@ -66,18 +66,6 @@ class CloudFlare
     }
 
     /**
-     * @param string $path
-     * @param string $body
-     * @param string $httpMethod
-     *
-     * TODO: Remove it. For development and tests
-     */
-    public function request($path, $body = null, $httpMethod = 'GET')
-    {
-        var_dump($this->httpClient->request($path, $body, $httpMethod));
-    }
-
-    /**
      * @param string $apiClass
      *
      * @return ApiInterface
@@ -89,8 +77,6 @@ class CloudFlare
         if (false === class_exists($apiFQNClass)) {
             throw new \InvalidArgumentException(sprintf('Undefined api class %s', $apiClass));
         }
-
-        var_dump($apiClass, $apiFQNClass);
 
         return new $apiFQNClass($this->httpClient);
     }
