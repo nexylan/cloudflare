@@ -17,7 +17,7 @@ namespace Nexy\CloudFlare\HttpClient;
 interface HttpClientInterface
 {
     /**
-     * Init and setup http client with CloudFlare SDK options.
+     * Init and setup http cloudflare with CloudFlare SDK options.
      *
      * @param array $options
      */

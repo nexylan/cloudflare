@@ -11,17 +11,32 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\HttpClient\HttpClientInterface;
+
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
 class AbstractApi implements ApiInterface
 {
     /**
+     * @var HttpClientInterface
+     */
+    protected $httpClient;
+
+    /**
      * API per_page option.
      *
      * @var int
      */
     private $perPage = 20;
+
+    /**
+     * @param HttpClientInterface $httpClient
+     */
+    public function __construct(HttpClientInterface $httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
 
     /**
      * {@inheritdoc}

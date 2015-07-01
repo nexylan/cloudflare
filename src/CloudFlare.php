@@ -11,11 +11,14 @@
 
 namespace Nexy\CloudFlare;
 
+use Nexy\CloudFlare\Api\ApiInterface;
 use Nexy\CloudFlare\HttpClient\GuzzleHttpClient;
 use Nexy\CloudFlare\HttpClient\HttpClientInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * @method Api\Zone apiZone
+ *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
 class CloudFlare
@@ -48,6 +51,21 @@ class CloudFlare
     }
 
     /**
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @return ApiInterface
+     */
+    public function __call($name, $arguments)
+    {
+        try {
+            return $this->api(str_replace('api', '', $name));
+        } catch (\InvalidArgumentException $e) {
+            throw new \BadMethodCallException(sprintf('Undefined method %s', $name));
+        }
+    }
+
+    /**
      * @param string $path
      * @param string $body
      * @param string $httpMethod
@@ -57,6 +75,24 @@ class CloudFlare
     public function request($path, $body = null, $httpMethod = 'GET')
     {
         var_dump($this->httpClient->request($path, $body, $httpMethod));
+    }
+
+    /**
+     * @param string $apiClass
+     *
+     * @return ApiInterface
+     */
+    private function api($apiClass)
+    {
+        $apiFQNClass = '\\Nexy\\CloudFlare\\Api\\'.$apiClass;
+
+        if (false === class_exists($apiFQNClass)) {
+            throw new \InvalidArgumentException(sprintf('Undefined api class %s', $apiClass));
+        }
+
+        var_dump($apiClass, $apiFQNClass);
+
+        return new $apiFQNClass($this->httpClient);
     }
 
     private function configureOptions(OptionsResolver $resolver)
