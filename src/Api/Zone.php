@@ -19,8 +19,18 @@ class Zone extends AbstractApi
     /**
      * @return array
      */
-    public function all()
+    public function index()
     {
         return $this->httpClient->get('zones');
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return array
+     */
+    public function show($id)
+    {
+        return $this->httpClient->get(sprintf('zones/%s', $id));
     }
 }
