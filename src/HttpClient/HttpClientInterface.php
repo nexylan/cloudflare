@@ -17,6 +17,13 @@ namespace Nexy\CloudFlare\HttpClient;
 interface HttpClientInterface
 {
     /**
+     * Init and setup http client with CloudFlare SDK options.
+     *
+     * @param array $options
+     */
+    public function init(array $options);
+
+    /**
      * Send a request to the server, receive a response,
      * decode the response and returns an associative array.
      *

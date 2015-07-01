@@ -43,7 +43,8 @@ class CloudFlare
 
         $this->options = $resolver->resolve($options);
 
-        $this->httpClient = $httpClient ? $httpClient : new GuzzleHttpClient($this->options);
+        $this->httpClient = $httpClient ? $httpClient : new GuzzleHttpClient();
+        $this->httpClient->init($this->options);
     }
 
     /**

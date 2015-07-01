@@ -25,11 +25,9 @@ class GuzzleHttpClient implements HttpClientInterface
     private $client;
 
     /**
-     * Constructor.
-     *
-     * @param array $options
+     * {@inheritdoc}
      */
-    public function __construct(array $options)
+    public function init(array $options)
     {
         $this->client = new Client([
             'base_uri'      => CloudFlare::API_BASE_URL,
