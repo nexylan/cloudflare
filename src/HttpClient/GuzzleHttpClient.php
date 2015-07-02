@@ -51,6 +51,6 @@ class GuzzleHttpClient extends AbstractHttpClient
             'headers'   => $headers,
         ]);
 
-        return json_decode($response->getBody(), true);
+        return $response->getBody();
     }
 }

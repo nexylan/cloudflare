@@ -33,7 +33,7 @@ interface HttpClientInterface
      * @param string[] $parameters Request GET parameters
      * @param array    $headers    Request headers
      *
-     * @return array The associative array response content
+     * @return string The response content
      */
     public function request($path, $httpMethod = 'GET', array $body = null, array $parameters = null, array $headers = []);
 
@@ -44,7 +44,7 @@ interface HttpClientInterface
      * @param array  $parameters GET Parameters
      * @param array  $headers    Reconfigure the request headers for this call only
      *
-     * @return array
+     * @return string The response content
      */
     public function get($path, array $parameters = [], array $headers = []);
 
@@ -55,7 +55,7 @@ interface HttpClientInterface
      * @param mixed  $body    Request body
      * @param array  $headers Reconfigure the request headers for this call only
      *
-     * @return array
+     * @return string The response content
      */
     public function post($path, $body = null, array $headers = []);
 
@@ -66,9 +66,7 @@ interface HttpClientInterface
      * @param mixed  $body    Request body
      * @param array  $headers Reconfigure the request headers for this call only
      *
-     * @internal param array $parameters Request body
-     *
-     * @return array
+     * @return string The response content
      */
     public function patch($path, $body = null, array $headers = []);
 
@@ -79,7 +77,7 @@ interface HttpClientInterface
      * @param mixed  $body    Request body
      * @param array  $headers Reconfigure the request headers for this call only
      *
-     * @return array
+     * @return string The response content
      */
     public function put($path, $body, array $headers = []);
 
@@ -90,7 +88,7 @@ interface HttpClientInterface
      * @param mixed  $body    Request body
      * @param array  $headers Reconfigure the request headers for this call only
      *
-     * @return array
+     * @return string The response content
      */
     public function delete($path, $body = null, array $headers = []);
 }

@@ -21,7 +21,7 @@ class AbstractApi implements ApiInterface
     /**
      * @var HttpClientInterface
      */
-    protected $httpClient;
+    private $httpClient;
 
     /**
      * API per_page option.
@@ -56,5 +56,62 @@ class AbstractApi implements ApiInterface
         $this->perPage = $perPage;
 
         return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get($path, array $parameters = [], array $headers = [])
+    {
+        $response = $this->httpClient->get($path, $parameters, $headers);
+
+        return $this->parseResponseContent($response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function post($path, $body = null, array $headers = [])
+    {
+        $response = $this->httpClient->post($path, $body, $headers);
+
+        return $this->parseResponseContent($response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function patch($path, $body = null, array $headers = [])
+    {
+        $response = $this->httpClient->patch($path, $body, $headers);
+
+        return $this->parseResponseContent($response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function delete($path, $body = null, array $headers = [])
+    {
+        $response = $this->httpClient->delete($path, $body, $headers);
+
+        return $this->parseResponseContent($response);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function put($path, $body, array $headers = [])
+    {
+        $response = $this->httpClient->put($path, $body, $headers);
+
+        return $this->parseResponseContent($response);
+    }
+
+    private function parseResponseContent($response)
+    {
+        $content = json_decode($response, true);
+
+        return $content['result'];
     }
 }

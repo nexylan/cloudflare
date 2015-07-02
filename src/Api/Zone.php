@@ -21,7 +21,7 @@ class Zone extends AbstractApi
      */
     public function index()
     {
-        return $this->httpClient->get('zones');
+        return $this->get('zones');
     }
 
     /**
@@ -31,6 +31,6 @@ class Zone extends AbstractApi
      */
     public function show($id)
     {
-        return $this->httpClient->get(sprintf('zones/%s', $id));
+        return $this->get(sprintf('zones/%s', $id));
     }
 }
