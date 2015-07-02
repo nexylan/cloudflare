@@ -11,6 +11,7 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\Exception\ApiErrorException;
 use Nexy\CloudFlare\HttpClient\HttpClientInterface;
 
 /**
@@ -111,6 +112,12 @@ class AbstractApi implements ApiInterface
     private function parseResponseContent($response)
     {
         $content = json_decode($response, true);
+
+        if (true !== $content['success']) {
+            $firstError = $content['errors'][0];
+
+            throw new ApiErrorException($firstError['message'], $firstError['code']);
+        }
 
         return $content['result'];
     }

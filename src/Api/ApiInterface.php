@@ -28,7 +28,6 @@ interface ApiInterface
      */
     public function setPerPage($perPage);
 
-
     /**
      * Call GET http client request.
      *
@@ -84,4 +83,5 @@ interface ApiInterface
      *
      * @return array
      */
-    public function delete($path, $body = null, array $headers = []);}
+    public function delete($path, $body = null, array $headers = []);
+}

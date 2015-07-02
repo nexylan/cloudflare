@@ -12,7 +12,9 @@
 namespace Nexy\CloudFlare\HttpClient;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Nexy\CloudFlare\CloudFlare;
+use Nexy\CloudFlare\Exception\HttpClientErrorException;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -45,11 +47,15 @@ class GuzzleHttpClient extends AbstractHttpClient
      */
     public function request($path, $method = 'GET', array $body = null, array $parameters = null, array $headers = [])
     {
-        $response = $this->client->request($method, $path, [
-            'body'      => $body,
-            'query'     => $parameters,
-            'headers'   => $headers,
-        ]);
+        try {
+            $response = $this->client->request($method, $path, [
+                'body'      => $body,
+                'query'     => $parameters,
+                'headers'   => $headers,
+            ]);
+        } catch (ClientException $e) {
+            throw new HttpClientErrorException($e->getMessage(), $e->getCode());
+        }
 
         return $response->getBody();
     }
