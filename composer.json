@@ -16,7 +16,9 @@
         "guzzlehttp/guzzle": ">=4.0,<=6.0"
     },
     "require-dev": {
-        "symfony/http-kernel": "~2.7"
+        "symfony/http-kernel": "~2.7",
+        "symfony/dependency-injection": "~2.7",
+        "symfony/config": "~2.7"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

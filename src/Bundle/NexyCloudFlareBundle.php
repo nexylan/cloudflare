@@ -11,6 +11,7 @@
 
 namespace Nexy\CloudFlare\Bundle;
 
+use Nexy\CloudFlare\Bundle\DependencyInjection\NexyCloudFlareExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -18,4 +19,15 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class NexyCloudFlareBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getContainerExtension()
+    {
+        if (null === $this->extension) {
+            $this->extension = new NexyCloudFlareExtension();
+        }
+
+        return $this->extension;
+    }
 }
