@@ -31,15 +31,27 @@ class GuzzleHttpClient extends AbstractHttpClient
      */
     public function init(array $options)
     {
-        $this->client = new Client([
-            'base_uri'      => CloudFlare::API_BASE_URL,
-            'timeout'       => $options['timeout'],
-            'headers'       => [
-                'User-Agent'    => $options['user_agent'],
-                'X-Auth-Key'    => $options['api_key'],
-                'X-Auth-Email'  => $options['email'],
-            ],
-        ]);
+        $headers = [
+            'User-Agent'    => $options['user_agent'],
+            'X-Auth-Key'    => $options['api_key'],
+            'X-Auth-Email'  => $options['email'],
+        ];
+
+        if (version_compare(Client::VERSION, '6.0') >= 0) {
+            $this->client = new Client([
+                'base_uri'      => CloudFlare::API_BASE_URL,
+                'timeout'       => $options['timeout'],
+                'headers'       => $headers,
+            ]);
+        } else {
+            $this->client = new Client([
+                'base_url'      => CloudFlare::API_BASE_URL,
+                'timeout'       => $options['timeout'],
+                'defaults'      => [
+                    'headers'       => $headers,
+                ],
+            ]);
+        }
     }
 
     /**
@@ -48,11 +60,22 @@ class GuzzleHttpClient extends AbstractHttpClient
     public function request($path, $method = 'GET', array $body = null, array $parameters = null, array $headers = [])
     {
         try {
-            $response = $this->client->request($method, $path, [
-                'body'      => $body,
-                'query'     => $parameters,
-                'headers'   => $headers,
-            ]);
+            // Guzzle <6.0 BC
+            if (version_compare(Client::VERSION, '6.0') >= 0) {
+                $response = $this->client->request($method, $path, [
+                    'body'      => $body,
+                    'query'     => $parameters,
+                    'headers'   => $headers,
+                ]);
+            } else {
+                $request = $this->client->createRequest($method, $path, [
+                    'body'      => $body,
+                    'query'     => $parameters,
+                    'headers'   => $headers,
+                ]);
+
+                $response = $this->client->send($request);
+            }
         } catch (ClientException $e) {
             throw new HttpClientErrorException($e->getMessage(), $e->getCode());
         }
