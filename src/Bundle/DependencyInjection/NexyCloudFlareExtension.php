@@ -11,7 +11,9 @@
 
 namespace Nexy\CloudFlare\Bundle\DependencyInjection;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
@@ -27,8 +29,15 @@ class NexyCloudFlareExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter($this->getAlias().'.credentials.email', $config['credentials']['email']);
-        $container->setParameter($this->getAlias().'.credentials.api_key', $config['credentials']['api_key']);
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        $cloudflareOptions = [
+            'email'     => $config['credentials']['email'],
+            'api_key'   => $config['credentials']['api_key'],
+        ];
+        $container->setParameter($this->getAlias().'.options', $cloudflareOptions);
+
+        $loader->load('cloudflare.xml');
     }
 
     /**
