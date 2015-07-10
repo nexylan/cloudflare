@@ -54,7 +54,7 @@ class AbstractApi implements ApiInterface
      */
     public function setPerPage($perPage)
     {
-        $this->perPage = $perPage;
+        $this->perPage = (null === $perPage ? $perPage : (int) $perPage);
 
         return $this;
     }
@@ -64,6 +64,10 @@ class AbstractApi implements ApiInterface
      */
     public function get($path, array $parameters = [], array $headers = [])
     {
+        if (null !== $this->perPage && !isset($parameters['per_page'])) {
+            $parameters['per_page'] = $this->perPage;
+        }
+
         $response = $this->httpClient->get($path, $parameters, $headers);
 
         return $this->parseResponseContent($response);
