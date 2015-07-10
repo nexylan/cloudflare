@@ -11,17 +11,21 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\ResultPager;
+
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
 class Zone extends AbstractApi
 {
     /**
-     * @return array
+     * @param int $page
+     *
+     * @return ResultPager
      */
-    public function index()
+    public function index($page = 1)
     {
-        return $this->get('zones');
+        return $this->getIndex('zones', ['page' => $page]);
     }
 
     /**
