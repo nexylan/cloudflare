@@ -60,9 +60,17 @@ class AbstractApi implements ApiInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Call GET http client request for index api.
+     *
+     * This will return the result and the pagination information.
+     *
+     * @param string $path       Request path
+     * @param array  $parameters GET Parameters
+     * @param array  $headers    Reconfigure the request headers for this call only
+     *
+     * @return ResultPager Traversable array of results with pagination information
      */
-    public function getIndex($path, array $parameters = [], array $headers = [])
+    protected function getIndex($path, array $parameters = [], array $headers = [])
     {
         if (null !== $this->perPage && !isset($parameters['per_page'])) {
             $parameters['per_page'] = $this->perPage;
@@ -77,9 +85,15 @@ class AbstractApi implements ApiInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Call GET http client request.
+     *
+     * @param string $path       Request path
+     * @param array  $parameters GET Parameters
+     * @param array  $headers    Reconfigure the request headers for this call only
+     *
+     * @return array
      */
-    public function get($path, array $parameters = [], array $headers = [])
+    protected function get($path, array $parameters = [], array $headers = [])
     {
         $response = $this->httpClient->get($path, $parameters, $headers);
 
@@ -87,9 +101,15 @@ class AbstractApi implements ApiInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Call POST http client request.
+     *
+     * @param string $path    Request path
+     * @param mixed  $body    Request body
+     * @param array  $headers Reconfigure the request headers for this call only
+     *
+     * @return array
      */
-    public function post($path, $body = null, array $headers = [])
+    protected function post($path, $body = null, array $headers = [])
     {
         $response = $this->httpClient->post($path, $body, $headers);
 
@@ -97,9 +117,17 @@ class AbstractApi implements ApiInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Call PATCH http client request.
+     *
+     * @param string $path    Request path
+     * @param mixed  $body    Request body
+     * @param array  $headers Reconfigure the request headers for this call only
+     *
+     * @internal param array $parameters Request body
+     *
+     * @return array
      */
-    public function patch($path, $body = null, array $headers = [])
+    protected function patch($path, $body = null, array $headers = [])
     {
         $response = $this->httpClient->patch($path, $body, $headers);
 
@@ -107,21 +135,33 @@ class AbstractApi implements ApiInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Call PUT http client request.
+     *
+     * @param string $path    Request path
+     * @param mixed  $body    Request body
+     * @param array  $headers Reconfigure the request headers for this call only
+     *
+     * @return array
      */
-    public function delete($path, $body = null, array $headers = [])
+    protected function put($path, $body, array $headers = [])
     {
-        $response = $this->httpClient->delete($path, $body, $headers);
+        $response = $this->httpClient->put($path, $body, $headers);
 
         return $this->parseResponseContent($response);
     }
 
     /**
-     * {@inheritDoc}
+     * Call DELETE http client request.
+     *
+     * @param string $path    Request path
+     * @param mixed  $body    Request body
+     * @param array  $headers Reconfigure the request headers for this call only
+     *
+     * @return array
      */
-    public function put($path, $body, array $headers = [])
+    protected function delete($path, $body = null, array $headers = [])
     {
-        $response = $this->httpClient->put($path, $body, $headers);
+        $response = $this->httpClient->delete($path, $body, $headers);
 
         return $this->parseResponseContent($response);
     }
