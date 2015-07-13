@@ -36,6 +36,16 @@ class CloudFlare
     private $options;
 
     /**
+     * API instances.
+     *
+     * Instances are added on this array on each `api` method request.
+     * Those instances can be reused with options keeping (like pagination).
+     *
+     * @var ApiInterface[]
+     */
+    private $apis = [];
+
+    /**
      * @param array               $options
      * @param HttpClientInterface $httpClient
      */
@@ -72,13 +82,17 @@ class CloudFlare
      */
     private function api($apiClass)
     {
-        $apiFQNClass = '\\Nexy\\CloudFlare\\Api\\'.$apiClass;
+        if (!isset($this->apis[$apiClass])) {
+            $apiFQNClass = '\\Nexy\\CloudFlare\\Api\\'.$apiClass;
 
-        if (false === class_exists($apiFQNClass)) {
-            throw new \InvalidArgumentException(sprintf('Undefined api class %s', $apiClass));
+            if (false === class_exists($apiFQNClass)) {
+                throw new \InvalidArgumentException(sprintf('Undefined api class %s', $apiClass));
+            }
+
+            $this->apis[$apiClass] = new $apiFQNClass($this->httpClient);
         }
 
-        return new $apiFQNClass($this->httpClient);
+        return $this->apis[$apiClass];
     }
 
     private function configureOptions(OptionsResolver $resolver)
