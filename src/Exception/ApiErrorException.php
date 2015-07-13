@@ -18,6 +18,6 @@ namespace Nexy\CloudFlare\Exception;
  *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class ApiErrorException extends ErrorException
+class ApiErrorException extends RuntimeException
 {
 }

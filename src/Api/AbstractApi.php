@@ -12,7 +12,9 @@
 namespace Nexy\CloudFlare\Api;
 
 use Nexy\CloudFlare\Exception\ApiErrorException;
+use Nexy\CloudFlare\Exception\ResultInfoNotFoundException;
 use Nexy\CloudFlare\HttpClient\HttpClientInterface;
+use Nexy\CloudFlare\ResultPager;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -50,7 +52,7 @@ class AbstractApi implements ApiInterface
     /**
      * {@inheritdoc}
      *
-     * @return AbstractApi
+     * @return $this
      */
     public function setPerPage($perPage)
     {
@@ -62,12 +64,25 @@ class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    public function get($path, array $parameters = [], array $headers = [])
+    public function getIndex($path, array $parameters = [], array $headers = [])
     {
         if (null !== $this->perPage && !isset($parameters['per_page'])) {
             $parameters['per_page'] = $this->perPage;
         }
 
+        $response = $this->httpClient->get($path, $parameters, $headers);
+
+        return new ResultPager([
+            'result' => $this->parseResponseContent($response),
+            'info'   => $this->parseResponseResultInfo($response),
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function get($path, array $parameters = [], array $headers = [])
+    {
         $response = $this->httpClient->get($path, $parameters, $headers);
 
         return $this->parseResponseContent($response);
@@ -124,5 +139,16 @@ class AbstractApi implements ApiInterface
         }
 
         return $content['result'];
+    }
+
+    private function parseResponseResultInfo($response)
+    {
+        $content = json_decode($response, true);
+
+        if (!isset($content['result_info'])) {
+            throw new ResultInfoNotFoundException();
+        }
+
+        return $content['result_info'];
     }
 }

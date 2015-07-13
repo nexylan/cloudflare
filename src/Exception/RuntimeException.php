@@ -14,6 +14,6 @@ namespace Nexy\CloudFlare\Exception;
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class ErrorException extends \ErrorException
+class RuntimeException extends \RuntimeException
 {
 }

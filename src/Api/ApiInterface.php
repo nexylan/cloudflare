@@ -11,6 +11,8 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\ResultPager;
+
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
@@ -27,6 +29,19 @@ interface ApiInterface
      * @return ApiInterface
      */
     public function setPerPage($perPage);
+
+    /**
+     * Call GET http client request for index api.
+     *
+     * This will return the result and the pagination information.
+     *
+     * @param string $path       Request path
+     * @param array  $parameters GET Parameters
+     * @param array  $headers    Reconfigure the request headers for this call only
+     *
+     * @return ResultPager Traversable array of results with pagination information
+     */
+    public function getIndex($path, array $parameters = [], array $headers = []);
 
     /**
      * Call GET http client request.
