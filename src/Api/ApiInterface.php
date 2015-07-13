@@ -26,7 +26,7 @@ interface ApiInterface
     /**
      * @param int $perPage
      *
-     * @return ApiInterface
+     * @return $this
      */
     public function setPerPage($perPage);
 

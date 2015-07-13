@@ -51,8 +51,6 @@ class AbstractApi implements ApiInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return $this
      */
     public function setPerPage($perPage)
     {
