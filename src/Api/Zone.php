@@ -16,7 +16,7 @@ use Nexy\CloudFlare\ResultPager;
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class Zone extends AbstractApi
+final class Zone extends AbstractApi
 {
     /**
      * @param int $page
