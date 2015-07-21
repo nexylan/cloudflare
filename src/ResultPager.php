@@ -40,6 +40,14 @@ final class ResultPager implements \Countable, \Iterator, \ArrayAccess
     }
 
     /**
+     * @return array|\Traversable
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
      * @return int
      */
     public function getCurrentPage()
