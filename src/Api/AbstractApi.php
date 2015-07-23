@@ -117,6 +117,22 @@ class AbstractApi implements ApiInterface
     }
 
     /**
+     * Call POST with a json converted body.
+     *
+     * @param string $path
+     * @param array  $body    Body content as an array
+     * @param array  $headers
+     *
+     * @return array
+     */
+    protected function postJson($path, array $body, array $headers = [])
+    {
+        $jsonBody = json_encode($body);
+
+        return $this->post($path, $jsonBody, $headers);
+    }
+
+    /**
      * Call PATCH http client request.
      *
      * @param string $path    Request path

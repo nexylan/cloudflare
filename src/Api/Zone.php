@@ -37,4 +37,14 @@ final class Zone extends AbstractApi
     {
         return $this->get(sprintf('zones/%s', $id));
     }
+
+    /**
+     * @param string $name The domain name
+     *
+     * @return array
+     */
+    public function create($name)
+    {
+        return $this->postJson('zones', ['name' => $name]);
+    }
 }

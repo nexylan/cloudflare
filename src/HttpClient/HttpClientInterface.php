@@ -29,13 +29,13 @@ interface HttpClientInterface
      *
      * @param string   $path       Request path
      * @param string   $httpMethod HTTP method to use
-     * @param string[] $body       Request body. Array converted to JSON payload. See sample https://api.cloudflare.com/#user-update-user
+     * @param string   $body       Request body.
      * @param string[] $parameters Request GET parameters
      * @param array    $headers    Request headers
      *
      * @return string The response content
      */
-    public function request($path, $httpMethod = 'GET', array $body = null, array $parameters = null, array $headers = []);
+    public function request($path, $httpMethod = 'GET', $body = null, array $parameters = null, array $headers = []);
 
     /**
      * Send a GET request.

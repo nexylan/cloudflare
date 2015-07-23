@@ -57,7 +57,7 @@ class GuzzleHttpClient extends AbstractHttpClient
     /**
      * {@inheritdoc}
      */
-    public function request($path, $method = 'GET', array $body = null, array $parameters = null, array $headers = [])
+    public function request($path, $method = 'GET', $body = null, array $parameters = null, array $headers = [])
     {
         try {
             // Guzzle <6.0 BC
