@@ -19,13 +19,14 @@ use Nexy\CloudFlare\ResultPager;
 final class Zone extends AbstractApi
 {
     /**
-     * @param int $page
+     * @param array $parameters
+     * @param int   $page
      *
      * @return ResultPager
      */
-    public function index($page = 1)
+    public function index(array $parameters = [], $page = 1)
     {
-        return $this->getIndex('zones', ['page' => $page]);
+        return $this->getIndex('zones', array_merge($parameters, ['page' => $page]));
     }
 
     /**
