@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class NexyCloudFlareExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -41,7 +41,7 @@ class NexyCloudFlareExtension extends Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAlias()
     {

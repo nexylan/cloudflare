@@ -17,7 +17,7 @@ namespace Nexy\CloudFlare\HttpClient;
 abstract class AbstractHttpClient implements HttpClientInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function get($path, array $parameters = [], array $headers = [])
     {
@@ -25,7 +25,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function post($path, $body = null, array $headers = [])
     {
@@ -33,7 +33,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function patch($path, $body = null, array $headers = [])
     {
@@ -41,7 +41,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function delete($path, $body = null, array $headers = [])
     {
@@ -49,7 +49,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function put($path, $body, array $headers = [])
     {
