@@ -139,8 +139,6 @@ class AbstractApi implements ApiInterface
      * @param mixed  $body    Request body
      * @param array  $headers Reconfigure the request headers for this call only
      *
-     * @internal param array $parameters Request body
-     *
      * @return array
      */
     protected function patch($path, $body = null, array $headers = [])
