@@ -22,16 +22,16 @@ use Nexy\CloudFlare\ResultPager;
 class AbstractApi implements ApiInterface
 {
     /**
-     * @var HttpClientInterface
-     */
-    private $httpClient;
-
-    /**
      * API per_page option.
      *
      * @var int
      */
     private $perPage = 20;
+
+    /**
+     * @var HttpClientInterface
+     */
+    protected $httpClient;
 
     /**
      * @param HttpClientInterface $httpClient
