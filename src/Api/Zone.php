@@ -11,6 +11,7 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\Api\Zone\Settings;
 use Nexy\CloudFlare\ResultPager;
 
 /**
@@ -18,6 +19,11 @@ use Nexy\CloudFlare\ResultPager;
  */
 final class Zone extends AbstractApi
 {
+    /**
+     * @var Settings
+     */
+    private $apiSettings = null;
+
     /**
      * @param array $parameters
      * @param int   $page
@@ -47,5 +53,21 @@ final class Zone extends AbstractApi
     public function create($name)
     {
         return $this->postJson('zones', ['name' => $name]);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return Settings
+     */
+    public function settings($id)
+    {
+        if (null === $this->apiSettings) {
+            $this->apiSettings = new Settings($this->httpClient);
+        }
+
+        $this->apiSettings->setZoneId($id);
+
+        return $this->apiSettings;
     }
 }
