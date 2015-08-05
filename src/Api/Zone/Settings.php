@@ -153,6 +153,31 @@ final class Settings extends AbstractApi
     }
 
     /**
+     * Set multiple zone settings.
+     *
+     * @param array $settings
+     *
+     * @return array
+     */
+    public function edit(array $settings)
+    {
+        $items = [];
+
+        foreach ($settings as $id => $value) {
+            array_push($items, ['id' => $id, 'value' => $this->toCloudFlareSettingsValue($value)]);
+        }
+
+        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->zoneId), ['items' => $items]);
+        $formattedSettings = [];
+
+        foreach ($settings as $settingsItem) {
+            $formattedSettings[$settingsItem['id']] = $this->toSdkSettingsValue($settingsItem['value']);
+        }
+
+        return $formattedSettings;
+    }
+
+    /**
      * @param string $name
      * @param array  $arguments
      *
