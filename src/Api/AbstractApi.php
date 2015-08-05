@@ -196,6 +196,22 @@ class AbstractApi implements ApiInterface
         return $this->parseResponseContent($response);
     }
 
+    /**
+     * Call DELETE with a json converted body.
+     *
+     * @param string $path    Request path
+     * @param mixed  $body    Request body
+     * @param array  $headers Reconfigure the request headers for this call only
+     *
+     * @return array
+     */
+    protected function deleteJson($path, $body = null, array $headers = [])
+    {
+        $jsonBody = json_encode($body);
+
+        return $this->delete($path, $jsonBody, $headers);
+    }
+
     private function parseResponseContent($response)
     {
         $content = json_decode($response, true);
