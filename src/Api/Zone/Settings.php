@@ -143,13 +143,8 @@ final class Settings extends AbstractApi
     public function index()
     {
         $settings = $this->get(sprintf('zones/%s/settings', $this->zoneId));
-        $formattedSettings = [];
 
-        foreach ($settings as $settingsItem) {
-            $formattedSettings[$settingsItem['id']] = $this->toSdkSettingsValue($settingsItem['value']);
-        }
-
-        return $formattedSettings;
+        return $this->toSdkSettings($settings);
     }
 
     /**
@@ -161,20 +156,9 @@ final class Settings extends AbstractApi
      */
     public function edit(array $settings)
     {
-        $items = [];
+        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->zoneId), ['items' => $this->toCloudFlareSettings($settings)]);
 
-        foreach ($settings as $id => $value) {
-            array_push($items, ['id' => $id, 'value' => $this->toCloudFlareSettingsValue($value)]);
-        }
-
-        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->zoneId), ['items' => $items]);
-        $formattedSettings = [];
-
-        foreach ($settings as $settingsItem) {
-            $formattedSettings[$settingsItem['id']] = $this->toSdkSettingsValue($settingsItem['value']);
-        }
-
-        return $formattedSettings;
+        return $this->toSdkSettings($settings);
     }
 
     /**
@@ -215,6 +199,16 @@ final class Settings extends AbstractApi
         return $value;
     }
 
+    private function toSdkSettings(array $settings)
+    {
+        $formattedSettings = [];
+        foreach ($settings as $settingsItem) {
+            $formattedSettings[$settingsItem['id']] = $this->toSdkSettingsValue($settingsItem['value']);
+        }
+
+        return $formattedSettings;
+    }
+
     private function toCloudFlareSettingsValue($value)
     {
         // Transform boolean on/off
@@ -223,5 +217,15 @@ final class Settings extends AbstractApi
         }
 
         return $value;
+    }
+
+    private function toCloudFlareSettings(array $settings)
+    {
+        $formattedSettings = [];
+        foreach ($settings as $id => $value) {
+            array_push($formattedSettings, ['id' => $id, 'value' => $this->toCloudFlareSettingsValue($value)]);
+        }
+
+        return $formattedSettings;
     }
 }
