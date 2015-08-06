@@ -56,6 +56,20 @@ final class Zone extends AbstractApi
     }
 
     /**
+     * Remove ALL files from CloudFlare's cache.
+     *
+     * @link https://api.cloudflare.com/#zone-purge-all-files
+     *
+     * @param string $id
+     *
+     * @return array
+     */
+    public function purgeAllFiles($id)
+    {
+        return $this->deleteJson(sprintf('zones/%s/purge_cache', $id), ['purge_everything' => true]);
+    }
+
+    /**
      * @param string $id
      *
      * @return Settings
