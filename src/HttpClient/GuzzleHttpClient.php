@@ -77,7 +77,8 @@ class GuzzleHttpClient extends AbstractHttpClient
                 $response = $this->client->send($request);
             }
         } catch (ClientException $e) {
-            throw new HttpClientErrorException($e->getMessage(), $e->getCode());
+            $cloudFlareError = json_decode($e->getResponse()->getBody()->getContents(), true)['errors'][0];
+            throw new HttpClientErrorException($e->getMessage(), $e->getCode(), $cloudFlareError['message'], $cloudFlareError['code']);
         }
 
         return $response->getBody();
