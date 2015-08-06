@@ -11,6 +11,7 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Nexy\CloudFlare\Api\Zone\Analytics;
 use Nexy\CloudFlare\Api\Zone\Settings;
 use Nexy\CloudFlare\ResultPager;
 
@@ -23,6 +24,11 @@ final class Zone extends AbstractApi
      * @var Settings
      */
     private $apiSettings = null;
+
+    /**
+     * @var Analytics
+     */
+    private $apiAnalytics = null;
 
     /**
      * @param array $parameters
@@ -83,5 +89,21 @@ final class Zone extends AbstractApi
         $this->apiSettings->setZoneId($id);
 
         return $this->apiSettings;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return Analytics
+     */
+    public function analytics($id)
+    {
+        if (null === $this->apiAnalytics) {
+            $this->apiAnalytics = new Analytics($this->httpClient);
+        }
+
+        $this->apiAnalytics->setZoneId($id);
+
+        return $this->apiAnalytics;
     }
 }
