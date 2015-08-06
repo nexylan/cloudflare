@@ -21,6 +21,13 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public function get($path, array $parameters = [], array $headers = [])
     {
+        // Convert some PHP value to CloudFlare API compliant parameters
+        array_walk_recursive($parameters, function (&$item, $key) {
+            if (is_bool($item)) {
+                $item = true === $item ? 'true' : 'false';
+            }
+        });
+
         return $this->request($path, 'GET', null, $parameters, $headers);
     }
 
