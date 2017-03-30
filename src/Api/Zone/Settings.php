@@ -12,7 +12,6 @@
 namespace Nexy\CloudFlare\Api\Zone;
 
 use Doctrine\Common\Inflector\Inflector;
-use Nexy\CloudFlare\Api\AbstractApi;
 
 /**
  * @method mixed getAdvancedDdos
@@ -80,7 +79,7 @@ use Nexy\CloudFlare\Api\AbstractApi;
  *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-final class Settings extends AbstractApi
+final class Settings extends AbstractZoneApi
 {
     const AVAILABLE_PROPERTIES = [
         'advanced_ddos',
@@ -117,23 +116,6 @@ final class Settings extends AbstractApi
     ];
 
     /**
-     * @var string
-     */
-    private $zoneId = null;
-
-    /**
-     * @param string $zoneId
-     *
-     * @return Settings
-     */
-    public function setZoneId($zoneId)
-    {
-        $this->zoneId = $zoneId;
-
-        return $this;
-    }
-
-    /**
      * Get all zone settings.
      *
      * @see https://api.cloudflare.com/#zone-settings-get-all-zone-settings
@@ -142,7 +124,7 @@ final class Settings extends AbstractApi
      */
     public function index()
     {
-        $settings = $this->get(sprintf('zones/%s/settings', $this->zoneId));
+        $settings = $this->get(sprintf('zones/%s/settings', $this->getZoneId()));
 
         return $this->toSdkSettings($settings);
     }
@@ -156,7 +138,7 @@ final class Settings extends AbstractApi
      */
     public function edit(array $settings)
     {
-        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->zoneId), ['items' => $this->toCloudFlareSettings($settings)]);
+        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->getZoneId()), ['items' => $this->toCloudFlareSettings($settings)]);
 
         return $this->toSdkSettings($settings);
     }
@@ -179,7 +161,7 @@ final class Settings extends AbstractApi
             throw new \BadMethodCallException(sprintf('Undefined method %s', $name));
         }
 
-        $path = sprintf('zones/%s/settings/%s', $this->zoneId, $property);
+        $path = sprintf('zones/%s/settings/%s', $this->getZoneId(), $property);
         if (false !== strpos($name, 'set')) {
             $response = $this->patchJson($path, ['value' => $this->toCloudFlareSettingsValue($arguments[0])]);
 

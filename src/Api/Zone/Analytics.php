@@ -11,30 +11,11 @@
 
 namespace Nexy\CloudFlare\Api\Zone;
 
-use Nexy\CloudFlare\Api\AbstractApi;
-
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class Analytics extends AbstractApi
+class Analytics extends AbstractZoneApi
 {
-    /**
-     * @var string
-     */
-    private $zoneId = null;
-
-    /**
-     * @param string $zoneId
-     *
-     * @return Settings
-     */
-    public function setZoneId($zoneId)
-    {
-        $this->zoneId = $zoneId;
-
-        return $this;
-    }
-
     /**
      * @see https://api.cloudflare.com/#zone-analytics-dashboard
      *
@@ -62,6 +43,6 @@ class Analytics extends AbstractApi
             $parameters = array_merge($parameters, ['until' => -(int) ($now->diff($until)->format('%a')) * 24 * 60]);
         }
 
-        return $this->get(sprintf('zones/%s/analytics/dashboard', $this->zoneId), $parameters);
+        return $this->get(sprintf('zones/%s/analytics/dashboard', $this->getZoneId()), $parameters);
     }
 }
