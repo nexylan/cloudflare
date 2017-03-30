@@ -64,7 +64,7 @@ final class Zone extends AbstractApi
     /**
      * Remove ALL files from CloudFlare's cache.
      *
-     * @link https://api.cloudflare.com/#zone-purge-all-files
+     * @see https://api.cloudflare.com/#zone-purge-all-files
      *
      * @param string $id
      *

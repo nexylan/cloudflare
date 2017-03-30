@@ -32,8 +32,8 @@ class NexyCloudFlareExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $cloudflareOptions = [
-            'email'     => $config['credentials']['email'],
-            'api_key'   => $config['credentials']['api_key'],
+            'email' => $config['credentials']['email'],
+            'api_key' => $config['credentials']['api_key'],
         ];
         $container->setParameter($this->getAlias().'.options', $cloudflareOptions);
 

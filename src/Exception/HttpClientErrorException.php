@@ -14,7 +14,7 @@ namespace Nexy\CloudFlare\Exception;
 /**
  * Thrown when API response HTTP code is an error.
  *
- * @link https://api.cloudflare.com/#responses
+ * @see https://api.cloudflare.com/#responses
  *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */

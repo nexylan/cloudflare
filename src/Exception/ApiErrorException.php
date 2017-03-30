@@ -14,7 +14,7 @@ namespace Nexy\CloudFlare\Exception;
 /**
  * Thrown when API response contains one or many errors.
  *
- * @link https://api.cloudflare.com/#responses
+ * @see https://api.cloudflare.com/#responses
  *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */

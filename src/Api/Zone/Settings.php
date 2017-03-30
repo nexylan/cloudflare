@@ -136,7 +136,7 @@ final class Settings extends AbstractApi
     /**
      * Get all zone settings.
      *
-     * @link https://api.cloudflare.com/#zone-settings-get-all-zone-settings
+     * @see https://api.cloudflare.com/#zone-settings-get-all-zone-settings
      *
      * @return array Associative array with id => value architecture
      */

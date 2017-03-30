@@ -36,7 +36,7 @@ class Analytics extends AbstractApi
     }
 
     /**
-     * @link https://api.cloudflare.com/#zone-analytics-dashboard
+     * @see https://api.cloudflare.com/#zone-analytics-dashboard
      *
      * @param \DateTime $since
      * @param \DateTime $until
@@ -49,17 +49,17 @@ class Analytics extends AbstractApi
     {
         $parameters = [
             'exclude_series' => $excludeSeries,
-            'continuous'     => $continuous,
+            'continuous' => $continuous,
         ];
 
         if (null !== $since) {
             $now = isset($now) ? $now : new \DateTime('now');
-            $parameters = array_merge($parameters, ['since' => -intval($now->diff($since)->format('%a')) * 24 * 60]);
+            $parameters = array_merge($parameters, ['since' => -(int) ($now->diff($since)->format('%a')) * 24 * 60]);
         }
 
         if (null !== $until) {
             $now = isset($now) ? $now : new \DateTime('now');
-            $parameters = array_merge($parameters, ['until' => -intval($now->diff($until)->format('%a')) * 24 * 60]);
+            $parameters = array_merge($parameters, ['until' => -(int) ($now->diff($until)->format('%a')) * 24 * 60]);
         }
 
         return $this->get(sprintf('zones/%s/analytics/dashboard', $this->zoneId), $parameters);

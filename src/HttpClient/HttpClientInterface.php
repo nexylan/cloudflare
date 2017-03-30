@@ -29,7 +29,7 @@ interface HttpClientInterface
      *
      * @param string   $path       Request path
      * @param string   $httpMethod HTTP method to use
-     * @param string   $body       Request body.
+     * @param string   $body       request body
      * @param string[] $parameters Request GET parameters
      * @param array    $headers    Request headers
      *

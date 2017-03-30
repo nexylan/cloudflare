@@ -21,32 +21,32 @@ class CloudFlareTest extends \PHPUnit_Framework_TestCase
     public function testValidOptions()
     {
         $client = new CloudFlare([
-            'email'     => 'foo@bar.com',
-            'api_key'   => 'MySecretApiKey',
+            'email' => 'foo@bar.com',
+            'api_key' => 'MySecretApiKey',
         ]);
 
         $this->assertAttributeEquals([
-            'user_agent'    => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
-            'timeout'       => 10,
-            'email'         => 'foo@bar.com',
-            'api_key'       => 'MySecretApiKey',
+            'user_agent' => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
+            'timeout' => 10,
+            'email' => 'foo@bar.com',
+            'api_key' => 'MySecretApiKey',
         ], 'options', $client);
     }
 
     public function testOverrideDefaultOptions()
     {
         $client = new CloudFlare([
-            'email'         => 'foo@bar.com',
-            'api_key'       => 'MySecretApiKey',
-            'user_agent'    => 'My awesome user agent',
-            'timeout'       => 5,
+            'email' => 'foo@bar.com',
+            'api_key' => 'MySecretApiKey',
+            'user_agent' => 'My awesome user agent',
+            'timeout' => 5,
         ]);
 
         $this->assertAttributeEquals([
-            'user_agent'    => 'My awesome user agent',
-            'timeout'       => 5,
-            'email'         => 'foo@bar.com',
-            'api_key'       => 'MySecretApiKey',
+            'user_agent' => 'My awesome user agent',
+            'timeout' => 5,
+            'email' => 'foo@bar.com',
+            'api_key' => 'MySecretApiKey',
         ], 'options', $client);
     }
 
@@ -56,7 +56,7 @@ class CloudFlareTest extends \PHPUnit_Framework_TestCase
     public function testMissingEmailOption()
     {
         new CloudFlare([
-            'api_key'   => 'MySecretApiKey',
+            'api_key' => 'MySecretApiKey',
         ]);
     }
 
@@ -66,7 +66,7 @@ class CloudFlareTest extends \PHPUnit_Framework_TestCase
     public function testMissingApiKeyOption()
     {
         new CloudFlare([
-            'email'     => 'foo@bar.com',
+            'email' => 'foo@bar.com',
         ]);
     }
 }

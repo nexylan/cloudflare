@@ -98,8 +98,8 @@ class CloudFlare
     private function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'user_agent'    => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
-            'timeout'       => 10,
+            'user_agent' => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
+            'timeout' => 10,
         ]);
         $resolver->setRequired([
             'email',

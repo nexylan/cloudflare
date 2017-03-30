@@ -80,7 +80,7 @@ class AbstractApi implements ApiInterface
 
         return new ResultPager([
             'result' => $this->parseResponseContent($response),
-            'info'   => $this->parseResponseResultInfo($response),
+            'info' => $this->parseResponseResultInfo($response),
         ]);
     }
 
