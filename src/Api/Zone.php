@@ -13,6 +13,7 @@ namespace Nexy\CloudFlare\Api;
 
 use Nexy\CloudFlare\Api\Zone\Analytics;
 use Nexy\CloudFlare\Api\Zone\Settings;
+use Nexy\CloudFlare\Api\Zone\Ssl;
 use Nexy\CloudFlare\ResultPager;
 
 /**
@@ -24,6 +25,11 @@ final class Zone extends AbstractApi
      * @var Settings
      */
     private $apiSettings = null;
+
+    /**
+     * @var Ssl
+     */
+    private $apiSsl = null;
 
     /**
      * @var Analytics
@@ -89,6 +95,22 @@ final class Zone extends AbstractApi
         $this->apiSettings->setZoneId($id);
 
         return $this->apiSettings;
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return Ssl
+     */
+    public function ssl($id)
+    {
+        if (null === $this->apiSsl) {
+            $this->apiSsl = new Ssl($this->httpClient);
+        }
+
+        $this->apiSsl->setZoneId($id);
+
+        return $this->apiSsl;
     }
 
     /**
