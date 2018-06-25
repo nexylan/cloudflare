@@ -8,6 +8,7 @@
 
         <service id="nexy_cloudflare.cloudflare" class="Nexy\CloudFlare\CloudFlare">
             <argument>%nexy_cloudflare.options%</argument>
+            <argument type="service" id="nexy_cloudflare.http.client" />
         </service>
 
     </services>

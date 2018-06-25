@@ -24,6 +24,6 @@ final class Ssl extends AbstractZoneApi
     public function verification()
     {
         // Returns the first and unique element of the array.
-        return $this->get(sprintf('zones/%s/ssl/verification', $this->getZoneId()))[0];
+        return $this->get(sprintf('/zones/%s/ssl/verification', $this->getZoneId()))[0];
     }
 }
