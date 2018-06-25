@@ -44,7 +44,7 @@ final class Zone extends AbstractApi
      */
     public function index(array $parameters = [], $page = 1)
     {
-        return $this->getIndex('zones', array_merge($parameters, ['page' => $page]));
+        return $this->getIndex('/zones', array_merge($parameters, ['page' => $page]));
     }
 
     /**
@@ -54,7 +54,7 @@ final class Zone extends AbstractApi
      */
     public function show($id)
     {
-        return $this->get(sprintf('zones/%s', $id));
+        return $this->get(sprintf('/zones/%s', $id));
     }
 
     /**
@@ -64,7 +64,7 @@ final class Zone extends AbstractApi
      */
     public function create($name)
     {
-        return $this->postJson('zones', ['name' => $name]);
+        return $this->postJson('/zones', ['name' => $name]);
     }
 
     /**
@@ -78,7 +78,7 @@ final class Zone extends AbstractApi
      */
     public function purgeAllFiles($id)
     {
-        return $this->deleteJson(sprintf('zones/%s/purge_cache', $id), ['purge_everything' => true]);
+        return $this->deleteJson(sprintf('/zones/%s/purge_cache', $id), ['purge_everything' => true]);
     }
 
     /**

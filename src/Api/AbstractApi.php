@@ -11,10 +11,13 @@
 
 namespace Nexy\CloudFlare\Api;
 
+use Http\Client\Common\HttpMethodsClient;
+use Http\Discovery\UriFactoryDiscovery;
+use Http\Message\UriFactory;
 use Nexy\CloudFlare\Exception\ApiErrorException;
 use Nexy\CloudFlare\Exception\ResultInfoNotFoundException;
-use Nexy\CloudFlare\HttpClient\HttpClientInterface;
 use Nexy\CloudFlare\ResultPager;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -29,15 +32,18 @@ class AbstractApi implements ApiInterface
     private $perPage = 20;
 
     /**
-     * @var HttpClientInterface
+     * @var UriFactory
+     */
+    private $uriFactory;
+
+    /**
+     * @var HttpMethodsClient
      */
     protected $httpClient;
 
-    /**
-     * @param HttpClientInterface $httpClient
-     */
-    public function __construct(HttpClientInterface $httpClient)
+    public function __construct(HttpMethodsClient $httpClient)
     {
+        $this->uriFactory = UriFactoryDiscovery::find();
         $this->httpClient = $httpClient;
     }
 
@@ -76,7 +82,10 @@ class AbstractApi implements ApiInterface
             $parameters['per_page'] = $this->perPage;
         }
 
-        $response = $this->httpClient->get($path, $parameters, $headers);
+        $response = $this->httpClient->get(
+            $this->uriFactory->createUri($path)->withQuery(http_build_query($parameters)),
+            $headers
+        );
 
         return new ResultPager([
             'result' => $this->parseResponseContent($response),
@@ -95,7 +104,10 @@ class AbstractApi implements ApiInterface
      */
     protected function get($path, array $parameters = [], array $headers = [])
     {
-        $response = $this->httpClient->get($path, $parameters, $headers);
+        $response = $this->httpClient->get(
+            $this->uriFactory->createUri($path)->withQuery(http_build_query($parameters)),
+            $headers
+        );
 
         return $this->parseResponseContent($response);
     }
@@ -111,7 +123,7 @@ class AbstractApi implements ApiInterface
      */
     protected function post($path, $body = null, array $headers = [])
     {
-        $response = $this->httpClient->post($path, $body, $headers);
+        $response = $this->httpClient->post($path, $headers, $body);
 
         return $this->parseResponseContent($response);
     }
@@ -143,7 +155,7 @@ class AbstractApi implements ApiInterface
      */
     protected function patch($path, $body = null, array $headers = [])
     {
-        $response = $this->httpClient->patch($path, $body, $headers);
+        $response = $this->httpClient->patch($path, $headers, $body);
 
         return $this->parseResponseContent($response);
     }
@@ -175,7 +187,7 @@ class AbstractApi implements ApiInterface
      */
     protected function put($path, $body, array $headers = [])
     {
-        $response = $this->httpClient->put($path, $body, $headers);
+        $response = $this->httpClient->put($path, $headers, $body);
 
         return $this->parseResponseContent($response);
     }
@@ -191,7 +203,7 @@ class AbstractApi implements ApiInterface
      */
     protected function delete($path, $body = null, array $headers = [])
     {
-        $response = $this->httpClient->delete($path, $body, $headers);
+        $response = $this->httpClient->delete($path, $headers, $body);
 
         return $this->parseResponseContent($response);
     }
@@ -212,9 +224,9 @@ class AbstractApi implements ApiInterface
         return $this->delete($path, $jsonBody, $headers);
     }
 
-    private function parseResponseContent($response)
+    private function parseResponseContent(ResponseInterface $response)
     {
-        $content = json_decode($response, true);
+        $content = json_decode((string) $response->getBody(), true);
 
         if (true !== $content['success']) {
             $firstError = $content['errors'][0];
@@ -225,9 +237,9 @@ class AbstractApi implements ApiInterface
         return $content['result'];
     }
 
-    private function parseResponseResultInfo($response)
+    private function parseResponseResultInfo(ResponseInterface $response)
     {
-        $content = json_decode($response, true);
+        $content = json_decode((string) $response->getBody(), true);
 
         if (!isset($content['result_info'])) {
             throw new ResultInfoNotFoundException();

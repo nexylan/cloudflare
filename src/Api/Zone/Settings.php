@@ -124,7 +124,7 @@ final class Settings extends AbstractZoneApi
      */
     public function index()
     {
-        $settings = $this->get(sprintf('zones/%s/settings', $this->getZoneId()));
+        $settings = $this->get(sprintf('/zones/%s/settings', $this->getZoneId()));
 
         return $this->toSdkSettings($settings);
     }
@@ -138,7 +138,7 @@ final class Settings extends AbstractZoneApi
      */
     public function edit(array $settings)
     {
-        $settings = $this->patchJson(sprintf('zones/%s/settings', $this->getZoneId()), ['items' => $this->toCloudFlareSettings($settings)]);
+        $settings = $this->patchJson(sprintf('/zones/%s/settings', $this->getZoneId()), ['items' => $this->toCloudFlareSettings($settings)]);
 
         return $this->toSdkSettings($settings);
     }
@@ -161,7 +161,7 @@ final class Settings extends AbstractZoneApi
             throw new \BadMethodCallException(sprintf('Undefined method %s', $name));
         }
 
-        $path = sprintf('zones/%s/settings/%s', $this->getZoneId(), $property);
+        $path = sprintf('/zones/%s/settings/%s', $this->getZoneId(), $property);
         if (false !== strpos($name, 'set')) {
             $response = $this->patchJson($path, ['value' => $this->toCloudFlareSettingsValue($arguments[0])]);
 
@@ -175,7 +175,7 @@ final class Settings extends AbstractZoneApi
     {
         // Transform on/off to boolean
         if (is_string($value) && in_array($value, ['on', 'off'], true)) {
-            $value = $value === 'on' ? true : false;
+            $value = 'on' === $value ? true : false;
         }
 
         return $value;
@@ -195,7 +195,7 @@ final class Settings extends AbstractZoneApi
     {
         // Transform boolean on/off
         if (is_bool($value)) {
-            $value = $value === true ? 'on' : 'off';
+            $value = true === $value ? 'on' : 'off';
         }
 
         return $value;

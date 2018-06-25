@@ -29,6 +29,12 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode('http')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')->defaultValue('httplug.client')->end()
+                    ->end()
+                ->end()
                 ->arrayNode('credentials')
                     ->isRequired()
                     ->children()

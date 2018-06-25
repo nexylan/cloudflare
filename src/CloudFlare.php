@@ -11,9 +11,15 @@
 
 namespace Nexy\CloudFlare;
 
+use Http\Client\Common\HttpMethodsClient;
+use Http\Client\Common\Plugin\BaseUriPlugin;
+use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
+use Http\Client\Common\PluginClient;
+use Http\Client\HttpClient;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\UriFactoryDiscovery;
 use Nexy\CloudFlare\Api\ApiInterface;
-use Nexy\CloudFlare\HttpClient\GuzzleHttpClient;
-use Nexy\CloudFlare\HttpClient\HttpClientInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -23,17 +29,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CloudFlare
 {
-    const API_BASE_URL = 'https://api.cloudflare.com/client/v4/';
+    const API_BASE_URL = 'https://api.cloudflare.com/client/v4';
 
     /**
-     * @var HttpClientInterface
+     * @var HttpMethodsClient
      */
     private $httpClient;
-
-    /**
-     * @var array
-     */
-    private $options;
 
     /**
      * API instances.
@@ -46,18 +47,25 @@ class CloudFlare
     private $apis = [];
 
     /**
-     * @param array               $options
-     * @param HttpClientInterface $httpClient
+     * @param array      $options
+     * @param HttpClient $httpClient
      */
-    public function __construct(array $options = [], HttpClientInterface $httpClient = null)
+    public function __construct(array $options = [], HttpClient $httpClient = null)
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
 
-        $this->options = $resolver->resolve($options);
+        $options = $resolver->resolve($options);
 
-        $this->httpClient = $httpClient ? $httpClient : new GuzzleHttpClient();
-        $this->httpClient->init($this->options);
+        $pluginClient = new PluginClient($httpClient ?: HttpClientDiscovery::find(), [
+            new BaseUriPlugin(UriFactoryDiscovery::find()->createUri(self::API_BASE_URL)),
+            new HeaderDefaultsPlugin([
+                'User-Agent' => $options['user_agent'],
+                'X-Auth-Key' => $options['api_key'],
+                'X-Auth-Email' => $options['email'],
+            ]),
+        ]);
+        $this->httpClient = new HttpMethodsClient($pluginClient, MessageFactoryDiscovery::find());
     }
 
     /**
@@ -99,14 +107,12 @@ class CloudFlare
     {
         $resolver->setDefaults([
             'user_agent' => 'nexylan-cloudflare-sdk (https://github.com/nexylan/cloudflare)',
-            'timeout' => 10,
         ]);
         $resolver->setRequired([
             'email',
             'api_key',
         ]);
         $resolver->setAllowedTypes('user_agent', 'string');
-        $resolver->setAllowedTypes('timeout', 'int');
         $resolver->setAllowedTypes('email', 'string');
         $resolver->setAllowedTypes('api_key', 'string');
     }

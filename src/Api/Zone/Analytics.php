@@ -43,6 +43,6 @@ class Analytics extends AbstractZoneApi
             $parameters = array_merge($parameters, ['until' => -(int) ($now->diff($until)->format('%a')) * 24 * 60]);
         }
 
-        return $this->get(sprintf('zones/%s/analytics/dashboard', $this->getZoneId()), $parameters);
+        return $this->get(sprintf('/zones/%s/analytics/dashboard', $this->getZoneId()), $parameters);
     }
 }
