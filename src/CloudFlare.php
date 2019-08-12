@@ -23,7 +23,7 @@ use Nexy\CloudFlare\Api\ApiInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @method Api\Zone apiZone
+ * @method Api\Zone apiZone()
  *
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
