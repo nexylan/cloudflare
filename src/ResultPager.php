@@ -17,7 +17,7 @@ namespace Nexy\CloudFlare;
 final class ResultPager implements \Countable, \Iterator, \ArrayAccess
 {
     /**
-     * @var array|\Traversable
+     * @var array
      */
     private $items = [];
 
@@ -40,7 +40,7 @@ final class ResultPager implements \Countable, \Iterator, \ArrayAccess
     }
 
     /**
-     * @return array|\Traversable
+     * @return array
      */
     public function getItems()
     {
